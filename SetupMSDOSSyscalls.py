@@ -21,6 +21,7 @@ from ghidra.program.model.address import *
 from ghidra.program.model.data import DataTypeManager
 from ghidra.program.model.lang import BasicCompilerSpec
 from ghidra.program.model.lang import Register
+from ghidra.program.model.lang import SpaceNames
 from ghidra.program.model.listing import Variable, ParameterImpl, VariableStorage
 from ghidra.program.model.mem import MemoryAccessException
 from ghidra.program.model.pcode import PcodeOp
@@ -40,16 +41,28 @@ SYSCALL_SPACE_NAME = "msdos_syscall"
 SYSCALL_SPACE_LENGTH = 0x1000
 MSDOS_CALLOTHER = "syscall"
 syscallRegister = "AH"
-syscallFileName = "msdos_syscall_numbers.json"
+syscallFileName = "/home/mturk/ghidra_scripts/msdos_syscall_numbers.json"
 datatypeArchiveName = "generic_clib"
 overrideType = RefType.CALLOTHER_OVERRIDE_CALL
 callingConvention = "__regcall"
+
+def loadSysCalls():
+    # This loads the full set of system calls and grabs only the int 21h ones, and it also reorganizes them to be searchable by the value of register ah
+    rawDb = json.load(open(syscallFileName))
+    sysCalls = {}
+    for service in rawDb:
+        if service['int_num'] != 0x21: continue
+        register_info = service.pop("register")
+        if 'ah' not in register_info: continue
+        sysCalls[register_info['ah']] = service
+    print(sysCalls.keys())
+    return sysCalls
 
 def run():
     if not (currentProgram.getExecutableFormat() == MzLoader.MZ_NAME and \
             currentProgram.getLanguage().getProcessor().toString() == "x86"):
         print "This script is intended for x86 MS-DOS files."
-        exit(1)
+        #exit(1)
         
     syscallSpace = currentProgram.getAddressFactory().getAddressSpace(SYSCALL_SPACE_NAME)
     if syscallSpace is None:
@@ -57,8 +70,9 @@ def run():
         if not currentProgram.hasExclusiveAccess():
             popup("Must have exclusive access to " + currentProgram.getName() + " to run this script.")
             exit(1)
+        print(dir(currentProgram.getCompilerSpec()))
         startAddr = currentProgram.getAddressFactory().getAddressSpace(
-            BasicCompilerSpec.OTHER_SPACE_NAME).getAddress(0x0)
+            SpaceNames.OTHER_SPACE_NAME).getAddress(0x0)
         cmd = AddUninitializedMemoryBlockCmd(SYSCALL_SPACE_NAME, None, "SetupMSDOSSyscalls",
                                              startAddr, SYSCALL_SPACE_LENGTH, True, True, True, False, True)
         if not cmd.applyTo(currentProgram):
@@ -72,48 +86,89 @@ def run():
     if len(addressesToSyscalls) == 0:
         print "No syscalls found"
         return
-    import os
-    print(os.getcwd())
-    syscallNumbersToNames = json.load(open(syscallFileName))
+    syscallNumbersToNames = loadSysCalls()
     for callSite, offset in sorted(addressesToSyscalls.items()):
         callTarget = syscallSpace.getAddress(offset)
         callee = currentProgram.getFunctionManager().getFunctionAt(callTarget)
-        funcInfo = syscallNumbersToNames[str(offset)]
+        if offset not in syscallNumbersToNames:
+            print("Could not identify ", offset)
+            continue
+        funcInfo = syscallNumbersToNames[offset]
         if callee is None:
-            funcName = "msdos_" + funcInfo.get("name", "syscall_%08X" % offset)
+            funcName = funcInfo.get("name", "syscall_%08X" % offset)
             callee = createFunction(callTarget, funcName)
             callee.setCallingConvention(callingConvention)
-            callee.updateFunction(None, None, )
+            #callee.updateFunction()
         callee.setCustomVariableStorage(True)
-        convertArgumentsToParameters(currentProgram, callee, funcInfo.get("arguments", []))
-        print(type(callee))
+        convertArgumentsToParameters(currentProgram, callee, funcInfo.get("arguments", None))
+        #convertReturnValuesToReturns(currentProgram, callee, funcInfo.get("return", None), funcInfo.get("arguments", None))
         ref = currentProgram.getReferenceManager().addMemoryReference(
             callSite, callTarget, overrideType, SourceType.USER_DEFINED, Reference.MNEMONIC)
         currentProgram.getReferenceManager().setPrimary(ref, True)
 
-dtypes = {1: "byte", 2: "int", 4: "SegmentedCodeAddress"}
+dtypes = {1: "byte",  2: "int", 3: "RequestSuccess", 4: "SegmentedCodeAddress", 5: "PointerModificationResult"}
 
 def convertArgumentsToParameters(program, function, arguments):
-    print("Processing %s" % function.getName())
+    if arguments is None: arguments = []
+    print("Processing arguments for %s" % function.getName())
     dtm = program.getDataTypeManager()
     root = dtm.getRootCategory()
     dts = dict( (s, dtm.getDataType("%s%s" % (root, dt)))
                 for s, dt in dtypes.items() )
     params = []
+    # First we figure out the arguments.  Note that sometimes our arguments will be both input and output.
     for i, argument in enumerate(arguments):
+        if argument['out']: continue # Skip these, as we will get them later
+        if "seq" in argument:
+            regs = [
+                program.getLanguage().getRegister(r.decode('ascii').upper())
+                for r in argument['seq']
+            ]
+        else:
         # We need to adjust this to figure out the "out" registers as well as the "in" registers
-        regs = [program.getLanguage().getRegister(
-            reg['register'].decode('ascii').upper())
-                for reg in argument]
+            regs = [program.getLanguage().getRegister(
+                argument['reg'].decode('ascii').upper())
+                ]
         vs = VariableStorage(program, regs)
         params.append(ParameterImpl("arg%02i" % i, dts[vs.size()], vs, program))
     function.replaceParameters(params, function.FunctionUpdateType.CUSTOM_STORAGE,
                                True, SourceType.USER_DEFINED)
 
+unique_returns = set()
+
+def convertReturnValuesToReturns(program, function, returns, arguments):
+    if returns is None: returns = []
+    if arguments is None: argumnets = []
+    print("Processing returns for %s" % function.getName())
+    dtm = program.getDataTypeManager()
+    root = dtm.getRootCategory()
+    dts = dict( (s, dtm.getDataType("%s%s" % (root, dt)))
+                for s, dt in dtypes.items() )
+    returnStorage = []
+    for arg in arguments:
+        if arg['out']:
+            if 'seq' in arg:
+                returnStorage.extend(_ for _ in arg['seq'])
+            else:
+                returnStorage.append(arg['reg'])
+    # So here's what we need to do -- we need to figure out all the unique types of returns that we have.  So let's look at this.
+    for rv in returns:
+        if rv.get("flag"):
+            returnStorage.append("CF")
+        else:
+            returnStorage.append(rv["reg"])
+    regs = [ program.getLanguage().getRegister(r.decode('ascii').upper()) for r in returnStorage ]
+    if len(regs) == 0: return
+    print(regs)
+    vs = VariableStorage(program, regs)
+    print("Variable Storage Size", vs.size(), returnStorage)
+    function.setReturn(dts[vs.size()], vs, SourceType.USER_DEFINED)
+
 def getSyscallsInFunctions(program, tMonitor):
     funcsToCalls = {}
     for func in program.getFunctionManager().getFunctionsNoStubs(True):
         tMonitor.checkCanceled()
+        print("func: ", func)
         for inst in program.getListing().getInstructions(func.getBody(), True):
             if checkInstruction(inst):
                 callSites = funcsToCalls.setdefault(func, [])
@@ -123,6 +178,7 @@ def getSyscallsInFunctions(program, tMonitor):
 def resolveConstants(funcsToCalls, program, tMonitor):
     addressesToSyscalls = {}
     syscallReg = program.getLanguage().getRegister(syscallRegister)
+    print("funcsToCalls: ", funcsToCalls)
     for func in sorted(funcsToCalls, key = lambda a: str(a)):
         start = func.getEntryPoint()
         eval_ = ConstantPropagationContextEvaluator(True)
