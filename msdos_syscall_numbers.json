@@ -1,0 +1,2136 @@
+[
+  {
+    "name": "cpu_int_02",
+    "int_num": 2,
+    "register": {},
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "cpu_debug_break",
+    "int_num": 3,
+    "register": {},
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "bios_video_set_mode",
+    "int_num": 16,
+    "register": {
+      "ah": 0
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_set_text_mode_cursor_shape",
+    "int_num": 16,
+    "register": {
+      "ah": 1
+    },
+    "arguments": [
+      {
+        "reg": "ch",
+        "out": false
+      },
+      {
+        "reg": "cl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_set_cursor_position",
+    "int_num": 16,
+    "register": {
+      "ah": 2
+    },
+    "arguments": [
+      {
+        "reg": "bh",
+        "out": false
+      },
+      {
+        "reg": "dh",
+        "out": false
+      },
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_get_cursor_position_size",
+    "int_num": 16,
+    "register": {
+      "ah": 3
+    },
+    "arguments": [
+      {
+        "reg": "bh",
+        "out": false
+      },
+      {
+        "reg": "cl",
+        "out": true
+      },
+      {
+        "reg": "dh",
+        "out": true
+      },
+      {
+        "reg": "dl",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ch"
+      }
+    ]
+  },
+  {
+    "name": "bios_video_set_CGA_palette",
+    "int_num": 16,
+    "register": {
+      "ah": 11
+    },
+    "arguments": [
+      {
+        "reg": "bh",
+        "out": false
+      },
+      {
+        "reg": "bl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_get_current_video_mode",
+    "int_num": 16,
+    "register": {
+      "ah": 15
+    },
+    "arguments": [
+      {
+        "reg": "ah",
+        "out": true
+      },
+      {
+        "reg": "bh",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "bios_video_set_all_palette_registers",
+    "int_num": 16,
+    "register": {
+      "ah": 16,
+      "al": 2
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "es",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_teletype_output",
+    "int_num": 16,
+    "register": {
+      "ah": 14
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "reg": "bh",
+        "out": false
+      },
+      {
+        "reg": "bl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_load_ROM_8x8_dbl_dot_patterns",
+    "int_num": 16,
+    "register": {
+      "ah": 17,
+      "al": 18
+    },
+    "arguments": [
+      {
+        "reg": "bl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_set_block_of_DAC_registers",
+    "int_num": 16,
+    "register": {
+      "ah": 16,
+      "al": 18
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "es",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_unknown_1030",
+    "int_num": 16,
+    "register": {
+      "ah": 48
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "bios_video_get_EGA_info",
+    "int_num": 16,
+    "register": {
+      "ah": 18
+    },
+    "arguments": [
+      {
+        "reg": "bl",
+        "out": true
+      },
+      {
+        "reg": "ch",
+        "out": true
+      },
+      {
+        "reg": "cl",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "bh"
+      }
+    ]
+  },
+  {
+    "name": "bios_video_write_string",
+    "int_num": 16,
+    "register": {
+      "ah": 19
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "reg": "bh",
+        "out": false
+      },
+      {
+        "reg": "bl",
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dh",
+        "out": false
+      },
+      {
+        "reg": "dl",
+        "out": false
+      },
+      {
+        "seq": [
+          "es",
+          "bp"
+        ],
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "bios_video_get_DAC_color_page_state",
+    "int_num": 16,
+    "register": {
+      "ah": 26
+    },
+    "arguments": [
+      {
+        "reg": "bh",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "bl"
+      }
+    ]
+  },
+  {
+    "name": "bios_get_memory_size",
+    "int_num": 18,
+    "register": {},
+    "arguments": [],
+    "return": [
+      {
+        "reg": "ax"
+      }
+    ]
+  },
+  {
+    "name": "disk_read_sectors_into_memory",
+    "int_num": 19,
+    "register": {
+      "ah": 2
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false,
+        "name": "sectors"
+      },
+      {
+        "reg": "cx",
+        "out": false,
+        "name": "sector_cyl"
+      },
+      {
+        "reg": "dh",
+        "out": false,
+        "name": "head_number"
+      },
+      {
+        "reg": "dl",
+        "out": false,
+        "name": "head_number"
+      },
+      {
+        "seq": [
+          "es",
+          "bx"
+        ],
+        "out": false,
+        "name": "data_buffer"
+      },
+      {
+        "reg": "ah",
+        "out": true
+      },
+      {
+        "reg": "al",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ax"
+      }
+    ]
+  },
+  {
+    "name": "bios_get_system_configuration",
+    "int_num": 21,
+    "register": {
+      "ah": 192
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "reg": "es",
+        "out": true
+      },
+      {
+        "reg": "bx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "tandy_read_eeprom",
+    "int_num": 21,
+    "register": {
+      "ah": 112,
+      "al": 0
+    },
+    "arguments": [
+      {
+        "reg": "bl",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "dx"
+      }
+    ]
+  },
+  {
+    "name": "tandy_write_eeprom",
+    "int_num": 21,
+    "register": {
+      "ah": 112,
+      "al": 1
+    },
+    "arguments": [
+      {
+        "reg": "bl",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "bios_kbd_get_keystroke",
+    "int_num": 22,
+    "register": {
+      "ah": 0
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "bios_kbd_check_keystroke",
+    "int_num": 22,
+    "register": {
+      "ah": 1
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": true
+      },
+      {
+        "reg": "ah",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "Z"
+      }
+    ]
+  },
+  {
+    "name": "bios_get_system_time",
+    "int_num": 26,
+    "register": {
+      "ah": 0
+    },
+    "arguments": [
+      {
+        "reg": "dx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "cx"
+      }
+    ]
+  },
+  {
+    "name": "msdos_terminate_program20",
+    "int_num": 32,
+    "register": {},
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msdos_terminate_program",
+    "int_num": 33,
+    "register": {
+      "ah": 0
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msdos_write_console_char",
+    "int_num": 33,
+    "register": {
+      "ah": 2
+    },
+    "arguments": [
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_direct_console_input",
+    "int_num": 33,
+    "register": {
+      "ah": 6,
+      "dl": 255
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "Z"
+      }
+    ]
+  },
+  {
+    "name": "msdos_direct_console_output",
+    "int_num": 33,
+    "register": {
+      "ah": 6
+    },
+    "arguments": [
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_direct_character_input_without_echo",
+    "int_num": 33,
+    "register": {
+      "ah": 7
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_character_input_without_echo",
+    "int_num": 33,
+    "register": {
+      "ah": 8
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_display_string",
+    "int_num": 33,
+    "register": {
+      "ah": 9
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_get_stdin_status",
+    "int_num": 33,
+    "register": {
+      "ah": 11
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msdos_flush_buffer_and_read_stdin",
+    "int_num": 33,
+    "register": {
+      "ah": 12
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_default_drive",
+    "int_num": 33,
+    "register": {
+      "ah": 14
+    },
+    "arguments": [
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_current_default_drive",
+    "int_num": 33,
+    "register": {
+      "ah": 25
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_DTA",
+    "int_num": 33,
+    "register": {
+      "ah": 26
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_set_interrupt_vector",
+    "int_num": 33,
+    "register": {
+      "ah": 37
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_parse_filename_into_fcb",
+    "int_num": 33,
+    "register": {
+      "ah": 41
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "si"
+        ],
+        "out": false
+      },
+      {
+        "seq": [
+          "es",
+          "di"
+        ],
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "si"
+        ],
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_system_date",
+    "int_num": 33,
+    "register": {
+      "ah": 42
+    },
+    "arguments": [
+      {
+        "reg": "dh",
+        "out": true
+      },
+      {
+        "reg": "cx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "dl"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_system_date",
+    "int_num": 33,
+    "register": {
+      "ah": 43
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dh",
+        "out": false
+      },
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_system_time",
+    "int_num": 33,
+    "register": {
+      "ah": 44
+    },
+    "arguments": [
+      {
+        "reg": "ch",
+        "out": true
+      },
+      {
+        "reg": "dh",
+        "out": true
+      },
+      {
+        "reg": "dl",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "cl"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_system_time",
+    "int_num": 33,
+    "register": {
+      "ah": 45
+    },
+    "arguments": [
+      {
+        "reg": "cl",
+        "out": false
+      },
+      {
+        "reg": "ch",
+        "out": false
+      },
+      {
+        "reg": "dh",
+        "out": false
+      },
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_disk_transfer_area_address",
+    "int_num": 33,
+    "register": {
+      "ah": 47
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msdos_get_dos_version",
+    "int_num": 33,
+    "register": {
+      "ah": 48
+    },
+    "arguments": [
+      {
+        "reg": "ah",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "terminate_and_stay_resident",
+    "int_num": 33,
+    "register": {
+      "ah": 49
+    },
+    "arguments": [
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_get_interrupt_vector",
+    "int_num": 33,
+    "register": {
+      "ah": 53
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_get_switch_character",
+    "int_num": 33,
+    "register": {
+      "ah": 55,
+      "al": 0
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "dl"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_switch_character",
+    "int_num": 33,
+    "register": {
+      "ah": 55,
+      "al": 1
+    },
+    "arguments": [
+      {
+        "reg": "dl",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_mkdir",
+    "int_num": 33,
+    "register": {
+      "ah": 57
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_rmdir",
+    "int_num": 33,
+    "register": {
+      "ah": 58
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_chdir",
+    "int_num": 33,
+    "register": {
+      "ah": 59
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_create_truncate_file",
+    "int_num": 33,
+    "register": {
+      "ah": 60
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_open_file",
+    "int_num": 33,
+    "register": {
+      "ah": 61
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_close_file",
+    "int_num": 33,
+    "register": {
+      "ah": 62
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_read_file",
+    "int_num": 33,
+    "register": {
+      "ah": 63
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false,
+        "name": "destination",
+        "dtype": "char *"
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_write_file",
+    "int_num": 33,
+    "register": {
+      "ah": 64
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_delete_file",
+    "int_num": 33,
+    "register": {
+      "ah": 65
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_file_position",
+    "int_num": 33,
+    "register": {
+      "ah": 66
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "seq": [
+          "cx",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "seq": [
+          "dx",
+          "ax"
+        ],
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_file_attributes",
+    "int_num": 33,
+    "register": {
+      "ah": 67,
+      "al": 0
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": true
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_file_attributes",
+    "int_num": 33,
+    "register": {
+      "ah": 67,
+      "al": 1
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "reg": "cx",
+        "out": true
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_ioctl_get_device_info",
+    "int_num": 33,
+    "register": {
+      "ah": 68,
+      "al": 0
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_ioctl_get_output_status",
+    "int_num": 33,
+    "register": {
+      "ah": 68,
+      "al": 7
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "al",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_ioctl_generic_character_device_request",
+    "int_num": 33,
+    "register": {
+      "ah": 68,
+      "al": 12
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "ch",
+        "out": false
+      },
+      {
+        "reg": "cl",
+        "out": false
+      },
+      {
+        "reg": "ds",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_unknown_2144",
+    "int_num": 33,
+    "register": {
+      "ah": 68
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msdos_duplicate_file_handle",
+    "int_num": 33,
+    "register": {
+      "ah": 69
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_current_directory",
+    "int_num": 33,
+    "register": {
+      "ah": 71
+    },
+    "arguments": [
+      {
+        "reg": "dl",
+        "out": false
+      },
+      {
+        "reg": "ds",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_allocate_memory_block",
+    "int_num": 33,
+    "register": {
+      "ah": 72
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_free_memory_block",
+    "int_num": 33,
+    "register": {
+      "ah": 73
+    },
+    "arguments": [
+      {
+        "reg": "es",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_resize_memory_block",
+    "int_num": 33,
+    "register": {
+      "ah": 74
+    },
+    "arguments": [
+      {
+        "reg": "es",
+        "out": false
+      },
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "bx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_exec",
+    "int_num": 33,
+    "register": {
+      "ah": 75
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      },
+      {
+        "seq": [
+          "es",
+          "bx"
+        ],
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_terminate",
+    "int_num": 33,
+    "register": {
+      "ah": 76
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msdos_get_return_code",
+    "int_num": 33,
+    "register": {
+      "ah": 77
+    },
+    "arguments": [
+      {
+        "reg": "ah",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_find_first_file",
+    "int_num": 33,
+    "register": {
+      "ah": 78
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_find_next_file",
+    "int_num": 33,
+    "register": {
+      "ah": 79
+    },
+    "arguments": [],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_current_process_id",
+    "int_num": 33,
+    "register": {
+      "ah": 81
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "bx"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_list_of_lists",
+    "int_num": 33,
+    "register": {
+      "ah": 82
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "es"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_verify_flag",
+    "int_num": 33,
+    "register": {
+      "ah": 84
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "al"
+      }
+    ]
+  },
+  {
+    "name": "msdos_rename_file",
+    "int_num": 33,
+    "register": {
+      "ah": 86
+    },
+    "arguments": [
+      {
+        "seq": [
+          "ds",
+          "dx"
+        ],
+        "out": false,
+        "name": "oldName"
+      },
+      {
+        "seq": [
+          "es",
+          "di"
+        ],
+        "out": false,
+        "name": "newName"
+      },
+      {
+        "reg": "ax",
+        "out": true,
+        "name": "errorCode"
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_memory_allocation_strategy",
+    "int_num": 33,
+    "register": {
+      "ah": 88,
+      "al": 0
+    },
+    "arguments": [
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_memory_allocation_strategy",
+    "int_num": 33,
+    "register": {
+      "ah": 88,
+      "al": 1
+    },
+    "arguments": [
+      {
+        "reg": "bl",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_UMB_link_state",
+    "int_num": 33,
+    "register": {
+      "ah": 88,
+      "al": 2
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_UMB_link_state",
+    "int_num": 33,
+    "register": {
+      "ah": 88,
+      "al": 3
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_get_extended_error_information",
+    "int_num": 33,
+    "register": {
+      "ah": 89
+    },
+    "arguments": [
+      {
+        "reg": "bh",
+        "out": true
+      },
+      {
+        "reg": "bl",
+        "out": true
+      },
+      {
+        "reg": "ch",
+        "out": true
+      },
+      {
+        "reg": "es",
+        "out": true
+      },
+      {
+        "reg": "di",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ax"
+      }
+    ]
+  },
+  {
+    "name": "msdos_create_new_file",
+    "int_num": 33,
+    "register": {
+      "ah": 91
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "ds",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_set_handle_count",
+    "int_num": 33,
+    "register": {
+      "ah": 103
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "ax",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "flag": "C"
+      }
+    ]
+  },
+  {
+    "name": "msdos_multiplex",
+    "int_num": 47,
+    "register": {},
+    "arguments": [
+      {
+        "reg": "ah",
+        "out": false
+      },
+      {
+        "reg": "al",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_reset",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 0
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ax"
+      }
+    ]
+  },
+  {
+    "name": "msmouse_show_cursor",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 1
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msmouse_hide_cursor",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 2
+    },
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "msmouse_position_mouse_cursor",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 4
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_define_horizontal_range",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 7
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_define_vertical_range",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 8
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_set_ISR",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 12
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "es",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_define_mickey_pixel_ratio",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 15
+    },
+    "arguments": [
+      {
+        "reg": "cx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "msmouse_set_interrupt_rate",
+    "int_num": 51,
+    "register": {
+      "ah": 0,
+      "al": 28
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      }
+    ],
+    "return": []
+  },
+  {
+    "name": "INT3F_OVERLAY_MANAGER",
+    "int_num": 63,
+    "register": {},
+    "arguments": [],
+    "return": []
+  },
+  {
+    "name": "ems_get_manager_status",
+    "int_num": 103,
+    "register": {
+      "ah": 64
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_get_page_frame_segment",
+    "int_num": 103,
+    "register": {
+      "ah": 65
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_get_number_of_pages",
+    "int_num": 103,
+    "register": {
+      "ah": 66
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": true
+      },
+      {
+        "reg": "dx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_get_handle_and_allocate_memory",
+    "int_num": 103,
+    "register": {
+      "ah": 67
+    },
+    "arguments": [
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": true
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_map_memory",
+    "int_num": 103,
+    "register": {
+      "ah": 68
+    },
+    "arguments": [
+      {
+        "reg": "al",
+        "out": false
+      },
+      {
+        "reg": "bx",
+        "out": false
+      },
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_release_memory",
+    "int_num": 103,
+    "register": {
+      "ah": 69
+    },
+    "arguments": [
+      {
+        "reg": "dx",
+        "out": false
+      }
+    ],
+    "return": [
+      {
+        "reg": "ah"
+      }
+    ]
+  },
+  {
+    "name": "ems_get_emm_version",
+    "int_num": 103,
+    "register": {
+      "ah": 70
+    },
+    "arguments": [],
+    "return": [
+      {
+        "reg": "ax"
+      }
+    ]
+  }
+]

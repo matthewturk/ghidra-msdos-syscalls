@@ -122,7 +122,9 @@ def convertArgumentsToParameters(program, function, arguments):
         if "seq" in argument:
             regs = [
                 program.getLanguage().getRegister(r.decode('ascii').upper())
-                for r in argument['seq']
+                # only use last one. hack here, for later. 32/16/segmented
+                # pointer stuff.
+                for r in argument['seq'][-1:]
             ]
         else:
         # We need to adjust this to figure out the "out" registers as well as the "in" registers
@@ -130,7 +132,13 @@ def convertArgumentsToParameters(program, function, arguments):
                 argument['reg'].decode('ascii').upper())
                 ]
         vs = VariableStorage(program, regs)
-        params.append(ParameterImpl("arg%02i" % i, dts[vs.size()], vs, program))
+        argument_name = argument.get("name", "arg%02i" % i)
+        vtype = argument.get("dtype", None)
+        if vtype:
+            vtype = dtm.getDataType("%s%s" % (root, vtype))
+        else:
+            vtype = dts[vs.size()]
+        params.append(ParameterImpl(argument_name, vtype, vs, program))
     function.replaceParameters(params, function.FunctionUpdateType.CUSTOM_STORAGE,
                                True, SourceType.USER_DEFINED)
 
@@ -181,7 +189,7 @@ def resolveConstants(funcsToCalls, program, tMonitor):
     print("funcsToCalls: ", funcsToCalls)
     for func in sorted(funcsToCalls, key = lambda a: str(a)):
         start = func.getEntryPoint()
-        eval_ = ConstantPropagationContextEvaluator(True)
+        eval_ = ConstantPropagationContextEvaluator(tMonitor)
         symEval = SymbolicPropogator(program)
         symEval.flowConstants(start, func.getBody(), eval_, True, tMonitor)
         for callSite in funcsToCalls[func]:
