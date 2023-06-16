@@ -122,9 +122,9 @@ def convertArgumentsToParameters(program, function, arguments):
         if "seq" in argument:
             regs = [
                 program.getLanguage().getRegister(r.decode('ascii').upper())
-                # only use last one. hack here, for later. 32/16/segmented
-                # pointer stuff.
-                for r in argument['seq'][-1:]
+                for r in argument['seq'] if not r.upper().endswith("S")
+                # Note that we specifically avoid including various segments,
+                # especially DS here, but we allow stuff like CX:DX.
             ]
         else:
         # We need to adjust this to figure out the "out" registers as well as the "in" registers

@@ -610,7 +610,9 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "text",
+        "dtype": "char *"
       }
     ],
     "return": []
@@ -950,7 +952,9 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "dirname",
+        "dtype": "char *"
       },
       {
         "reg": "ax",
@@ -1000,7 +1004,9 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "dirname",
+        "dtype": "char *"
       },
       {
         "reg": "ax",
@@ -1025,11 +1031,14 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "filename",
+        "dtype": "char *"
       },
       {
         "reg": "cx",
-        "out": false
+        "out": false,
+        "name": "mode"
       },
       {
         "reg": "ax",
@@ -1054,11 +1063,14 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "filename",
+        "dtype": "char *"
       },
       {
         "reg": "al",
-        "out": false
+        "out": false,
+        "name": "mode"
       },
       {
         "reg": "ax",
@@ -1080,7 +1092,8 @@
     "arguments": [
       {
         "reg": "bx",
-        "out": false
+        "out": false,
+        "name": "fd"
       }
     ],
     "return": [
@@ -1098,11 +1111,13 @@
     "arguments": [
       {
         "reg": "bx",
-        "out": false
+        "out": false,
+        "name": "fd"
       },
       {
         "reg": "cx",
-        "out": false
+        "out": false,
+        "name": "count"
       },
       {
         "seq": [
@@ -1115,7 +1130,8 @@
       },
       {
         "reg": "ax",
-        "out": true
+        "out": true,
+        "name": "read_count"
       }
     ],
     "return": [
@@ -1133,22 +1149,27 @@
     "arguments": [
       {
         "reg": "bx",
-        "out": false
+        "out": false,
+        "name": "fd"
       },
       {
         "reg": "cx",
-        "out": false
+        "out": false,
+        "name": "count"
       },
       {
         "seq": [
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "source",
+        "dtype": "char *"
       },
       {
         "reg": "ax",
-        "out": true
+        "out": true,
+        "name": "written"
       }
     ],
     "return": [
@@ -1169,7 +1190,9 @@
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "filename",
+        "dtype": "char *"
       },
       {
         "reg": "ax",
@@ -1191,18 +1214,22 @@
     "arguments": [
       {
         "reg": "bx",
-        "out": false
+        "out": false,
+        "name": "fd"
       },
       {
         "seq": [
           "cx",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "offset"
       },
       {
         "reg": "al",
-        "out": false
+        "out": false,
+        "name": "mode",
+        "dtype": "byte"
       },
       {
         "seq": [
@@ -1425,7 +1452,8 @@
     "arguments": [
       {
         "reg": "bx",
-        "out": false
+        "out": false,
+        "name": "num_paragraphs"
       }
     ],
     "return": [
@@ -1443,7 +1471,8 @@
     "arguments": [
       {
         "reg": "es",
-        "out": false
+        "out": false,
+        "name": "block_start"
       }
     ],
     "return": [
