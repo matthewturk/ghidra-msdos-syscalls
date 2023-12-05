@@ -701,14 +701,16 @@
     "arguments": [
       {
         "reg": "al",
-        "out": false
+        "out": false,
+        "name": "interrupt_num"
       },
       {
         "seq": [
           "ds",
           "dx"
         ],
-        "out": false
+        "out": false,
+        "name": "interrupt_function"
       }
     ],
     "return": []
@@ -1426,15 +1428,16 @@
     "arguments": [
       {
         "reg": "dl",
-        "out": false
+        "out": false,
+        "name": "drive_code"
       },
       {
-        "reg": "ds",
-        "out": false
-      },
-      {
-        "reg": "dx",
-        "out": false
+        "seq": [
+            "ds",
+            "si"
+        ],
+        "out": false,
+        "name": "scratch_buffer"
       }
     ],
     "return": [
