@@ -5,11 +5,15 @@
 # @menupath
 # @toolbar
 
+import os
+
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
 import typing
 
 if typing.TYPE_CHECKING:
     import ghidra
-    from ghidra.ghidra_builtins import currentProgram, popup, createFunction
+    from ghidra.ghidra_builtins import currentProgram, popup, createFunction, monitor
 
 # TODO Add User Code Here
 
@@ -31,7 +35,7 @@ from ghidra.app.util.opinion import MzLoader
 # from ghidra.program.model.lang import Register
 from ghidra.program.model.lang import SpaceNames
 
-from ghidra.program.model.listing import ParameterImpl, VariableStorage
+from ghidra.program.model.listing import ParameterImpl, VariableStorage, Function
 
 # from ghidra.program.model.mem import MemoryAccessException
 from ghidra.program.model.pcode import PcodeOp
@@ -45,6 +49,8 @@ from ghidra.program.util import SymbolicPropogator
 # from ghidra.util.exception import CancelledException
 # from ghidra.util.task import TaskMonitor
 # from ghidra import program
+
+import xml.etree.ElementTree as ET
 
 import json
 from com.kenai.jffi import CallingConvention
@@ -61,6 +67,7 @@ callingConvention = "__regcall"
 
 def loadSysCalls():
     # This loads the full set of system calls and grabs only the int 21h ones, and it also reorganizes them to be searchable by the value of register ah
+    # tree = ET.parse("realmodeintservices.xml")
     rawDb = json.load(open(syscallFileName))
     sysCalls = {}
     for service in rawDb:
@@ -76,29 +83,30 @@ def loadSysCalls():
 
 def run():
     if not (
-        currentProgram.getExecutableFormat() == MzLoader.MZ_NAME
-        and currentProgram.getLanguage().getProcessor().toString() == "x86"
+        currentProgram().getExecutableFormat() == MzLoader.MZ_NAME
+        and currentProgram().getLanguage().getProcessor().toString() == "x86"
     ):
         print("This script is intended for x86 MS-DOS files.")
         # exit(1)
 
-    syscallSpace = currentProgram.getAddressFactory().getAddressSpace(
-        SYSCALL_SPACE_NAME
+    syscallSpace = (
+        currentProgram().getAddressFactory().getAddressSpace(SYSCALL_SPACE_NAME)
     )
     if syscallSpace is None:
         print("AddressSpace %s not found, creating..." % SYSCALL_SPACE_NAME)
-        if not currentProgram.hasExclusiveAccess():
+        if not currentProgram().hasExclusiveAccess():
             popup(
                 "Must have exclusive access to "
-                + currentProgram.getName()
+                + currentProgram().getName()
                 + " to run this script."
             )
             exit(1)
-        print(dir(currentProgram.getCompilerSpec()))
+        print(dir(currentProgram().getCompilerSpec()))
         startAddr = (
-            currentProgram.getAddressFactory()
+            currentProgram()
+            .getAddressFactory()
             .getAddressSpace(SpaceNames.OTHER_SPACE_NAME)
-            .getAddress(0x0, caseSensitive=False)
+            .getAddress(0x0)
         )
         cmd = AddUninitializedMemoryBlockCmd(
             SYSCALL_SPACE_NAME,
@@ -112,23 +120,23 @@ def run():
             False,
             True,
         )
-        if not cmd.applyTo(currentProgram):
+        if not cmd.applyTo(currentProgram()):
             popup("Failed to create " + SYSCALL_SPACE_NAME)
             exit(1)
-        syscallSpace = currentProgram.getAddressFactory().getAddressSpace(
-            SYSCALL_SPACE_NAME
+        syscallSpace = (
+            currentProgram().getAddressFactory().getAddressSpace(SYSCALL_SPACE_NAME)
         )
     else:
         print("AddressSpace %s found, continuing..." % syscallSpace)
-    funcsToCalls = getSyscallsInFunctions(currentProgram, monitor)
-    addressesToSyscalls = resolveConstants(funcsToCalls, currentProgram, monitor)
+    funcsToCalls = getSyscallsInFunctions(currentProgram(), monitor())
+    addressesToSyscalls = resolveConstants(funcsToCalls, currentProgram(), monitor())
     if len(addressesToSyscalls) == 0:
         print("No syscalls found")
         return
     syscallNumbersToNames = loadSysCalls()
     for callSite, offset in sorted(addressesToSyscalls.items()):
-        callTarget = syscallSpace.getAddress(offset, caseSensitive=False)
-        callee = currentProgram.getFunctionManager().getFunctionAt(callTarget)
+        callTarget = syscallSpace.getAddress(offset)
+        callee = currentProgram().getFunctionManager().getFunctionAt(callTarget)
         if offset not in syscallNumbersToNames:
             print("Could not identify ", offset)
             continue
@@ -140,17 +148,21 @@ def run():
             # callee.updateFunction()
         callee.setCustomVariableStorage(True)
         convertArgumentsToParameters(
-            currentProgram, callee, funcInfo.get("arguments", None)
+            currentProgram(), callee, funcInfo.get("arguments", None)
         )
         # convertReturnValuesToReturns(currentProgram, callee, funcInfo.get("return", None), funcInfo.get("arguments", None))
-        ref = currentProgram.getReferenceManager().addMemoryReference(
-            callSite,
-            callTarget,
-            overrideType,
-            SourceType.USER_DEFINED,
-            Reference.MNEMONIC,
+        ref = (
+            currentProgram()
+            .getReferenceManager()
+            .addMemoryReference(
+                callSite,
+                callTarget,
+                overrideType,
+                SourceType.USER_DEFINED,
+                Reference.MNEMONIC,
+            )
         )
-        currentProgram.getReferenceManager().setPrimary(ref, True)
+        currentProgram().getReferenceManager().setPrimary(ref, True)
 
 
 dtypes = {
@@ -197,9 +209,10 @@ def convertArgumentsToParameters(program, function, arguments):
         else:
             vtype = dts[vs.size()]
         params.append(ParameterImpl(argument_name, vtype, vs, program))
+    print(function, type(function), dir(function))
     function.replaceParameters(
         params,
-        function.FunctionUpdateType.CUSTOM_STORAGE,
+        Function.FunctionUpdateType.CUSTOM_STORAGE,
         True,
         SourceType.USER_DEFINED,
     )
@@ -212,7 +225,7 @@ def convertReturnValuesToReturns(program, function, returns, arguments):
     if returns is None:
         returns = []
     if arguments is None:
-        argumnets = []
+        arguments = []
     print("Processing returns for %s" % function.getName())
     dtm = program.getDataTypeManager()
     root = dtm.getRootCategory()

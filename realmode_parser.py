@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import json
 
 tree = ET.parse("realmodeintservices.xml")
 root = tree.getroot()
@@ -6,13 +7,18 @@ root = tree.getroot()
 services = {}
 
 
-def process_prim(arg):
+def process_prim(arg, suffix=""):
     if (prim := arg.find("prim")) is not None:
-        return dict(prim.attrib)
+        rv = {
+            "type": f"{prim.attrib.get('domain', 'undefined')}{suffix}",
+        }
+        if "size" in prim.attrib:
+            rv["size"] = prim.attrib["size"]
+        return rv
     elif ptr := arg.find("ptr"):
-        return process_prim(ptr)
+        return process_prim(ptr, "*")
     elif segptr := arg.find("segptr"):
-        return process_prim(segptr)
+        return process_prim(segptr, "*")
     return {}
 
 
@@ -44,7 +50,6 @@ for service in root:
         registers[register.attrib["reg"]] = int(register.text, base=16)
     sig = {"return": [], "args": []}
     services[name] = {"vector": vector, "registers": registers, "signature": sig}
-    retvals = signature.findall("return")
     for argi, arg in enumerate(signature.findall("arg")):
         # Each arg
         thisarg = process_arg(arg, argi)
@@ -52,6 +57,10 @@ for service in root:
         if arg.attrib.get("out", False):
             # In this case, we will need to handle it during our return value
             # work.  So, we have it here, but *also* in our retvals.
-            retvals.append(sig["args"][-1])
+            # Note that the name doesn't really matter that much here I think.
+            # We'll have to update the struct names manually I think.
+            sig["return"].append(thisarg)
     for argi, arg in enumerate(signature.findall("return")):
         sig["return"].append(process_arg(arg, argi))
+
+json.dump(services, open("msdos_syscalls.json", "w"), indent=2)
