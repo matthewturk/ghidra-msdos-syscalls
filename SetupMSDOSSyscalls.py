@@ -7,6 +7,7 @@
 
 import os
 
+# https://github.com/numpy/numpy/issues/14474
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 import typing
@@ -63,22 +64,49 @@ syscallFileName = "/home/mturk/ghidra_scripts/msdos_syscall_numbers.json"
 datatypeArchiveName = "generic_clib"
 overrideType = RefType.CALLOTHER_OVERRIDE_CALL
 callingConvention = "__regcall"
+interrupt_list = (
+    0x21,
+    #0x60,
+)
+
+
+def updateSysCalls(callDb):
+    # We manually add in all the interrupt 0x60 ones.
+    arguments = [
+        {"reg": "ax", "out": False},
+        {"reg": "bx", "out": False},
+        {"reg": "cx", "out": False},
+        {"reg": "dx", "out": False},
+    ]
+    returns = []
+    for i in range(0xFF):
+        callDb[i] = {
+            "name": f"syscall_int60_{i:02d}",
+            "int_num": 0x60,
+            "register": {"ah": i},
+            "arguments": arguments,
+            "returns": returns,
+        }
+    return
 
 
 def loadSysCalls():
     # This loads the full set of system calls and grabs only the int 21h ones, and it also reorganizes them to be searchable by the value of register ah
     # tree = ET.parse("realmodeintservices.xml")
     rawDb = json.load(open(syscallFileName))
+    #updateSysCalls(rawDb)
     sysCalls = {}
     for service in rawDb:
         intcalls = sysCalls.setdefault(service["int_num"], {})
-        # if service['int_num'] != 0x21: continue
+        if service["int_num"] not in interrupt_list:
+            continue
         register_info = service.pop("register")
         if "ah" not in register_info:
             continue
         intcalls[register_info["ah"]] = service
+        print("Setting %s to %s" % (register_info["ah"], service["name"]))
     print(sysCalls.keys())
-    return sysCalls
+    return sysCalls[0x21]
 
 
 def run():
@@ -101,7 +129,6 @@ def run():
                 + " to run this script."
             )
             exit(1)
-        print(dir(currentProgram().getCompilerSpec()))
         startAddr = (
             currentProgram()
             .getAddressFactory()
@@ -134,7 +161,9 @@ def run():
         print("No syscalls found")
         return
     syscallNumbersToNames = loadSysCalls()
+    print(syscallNumbersToNames.keys())
     for callSite, offset in sorted(addressesToSyscalls.items()):
+        print("Checking %s and %02X" % (callSite, offset))
         callTarget = syscallSpace.getAddress(offset)
         callee = currentProgram().getFunctionManager().getFunctionAt(callTarget)
         if offset not in syscallNumbersToNames:
@@ -188,7 +217,7 @@ def convertArgumentsToParameters(program, function, arguments):
             continue  # Skip these, as we will get them later
         if "seq" in argument:
             regs = [
-                program.getLanguage().getRegister(r.decode("ascii").upper())
+                program.getLanguage().getRegister(r.upper())
                 for r in argument["seq"]
                 if not r.upper().endswith("S")
                 # Note that we specifically avoid including various segments,
@@ -196,12 +225,8 @@ def convertArgumentsToParameters(program, function, arguments):
             ]
         else:
             # We need to adjust this to figure out the "out" registers as well as the "in" registers
-            regs = [
-                program.getLanguage().getRegister(
-                    argument["reg"].decode("ascii").upper()
-                )
-            ]
-        vs = VariableStorage(program, regs)
+            regs = [program.getLanguage().getRegister(argument["reg"].upper())]
+        vs = VariableStorage(program, *regs)
         argument_name = argument.get("name", "arg%02i" % i)
         vtype = argument.get("dtype", None)
         if vtype:
@@ -209,7 +234,6 @@ def convertArgumentsToParameters(program, function, arguments):
         else:
             vtype = dts[vs.size()]
         params.append(ParameterImpl(argument_name, vtype, vs, program))
-    print(function, type(function), dir(function))
     function.replaceParameters(
         params,
         Function.FunctionUpdateType.CUSTOM_STORAGE,
@@ -249,9 +273,7 @@ def convertReturnValuesToReturns(program, function, returns, arguments):
     ]
     if len(regs) == 0:
         return
-    print(regs)
     vs = VariableStorage(program, regs)
-    print("Variable Storage Size", vs.size(), returnStorage)
     function.setReturn(dts[vs.size()], vs, SourceType.USER_DEFINED)
 
 
@@ -281,7 +303,7 @@ def resolveConstants(funcsToCalls, program, tMonitor):
             if val is None:
                 print("Couldn't resolve value of %s" % syscallReg)
                 continue
-            print("Resolved syscall to 0x%02X" % val.getValue())
+            print("Resolved syscall (at %s) to 0x%02X" % (callSite, val.getValue()))
             addressesToSyscalls[callSite] = val.getValue()
     return addressesToSyscalls
 

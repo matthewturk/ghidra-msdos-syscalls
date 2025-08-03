@@ -33,7 +33,7 @@ def run():
         print("Not a scalar")
         return
     newAddr: Address = program.parseAddress(
-        f"{0x235b:04X}:{suboperand.getValue(0):04X}", False
+        f"{0x3154:04X}:{suboperand.getValue(0):04X}", False
     )[0]
     print(newAddr)
     inst.addOperandReference(
