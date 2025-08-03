@@ -12,6 +12,7 @@ import os
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 import typing
+import java
 
 # if typing.TYPE_CHECKING:
 # import ghidra
@@ -206,7 +207,7 @@ def convertArgumentsToParameters(program, function, arguments):
     dtm = program.getDataTypeManager()
     root = dtm.getRootCategory()
     dts = dict((s, dtm.getDataType("%s%s" % (root, dt))) for s, dt in dtypes.items())
-    params = []
+    params = java.util.ArrayList()
     # First we figure out the arguments.  Note that sometimes our arguments will be both input and output.
     for i, argument in enumerate(arguments):
         if argument["out"]:
@@ -229,7 +230,7 @@ def convertArgumentsToParameters(program, function, arguments):
             vtype = dtm.getDataType("%s%s" % (root, vtype))
         else:
             vtype = dts[vs.size()]
-        params.append(ParameterImpl(argument_name, vtype, vs, program))
+        params.add(ParameterImpl(argument_name, vtype, vs, program))
     function.replaceParameters(
         params,
         Function.FunctionUpdateType.CUSTOM_STORAGE,
