@@ -1,9 +1,10 @@
-# TODO write a description for this script
-# @author
+# This identifies system calls in MS-DOS MZ applications and replaces them with stubs.
+# @author Matthew Turk
 # @category _NEW_
 # @keybinding
 # @menupath
 # @toolbar
+# @runtime PyGhidra
 
 import os
 
@@ -12,9 +13,9 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 import typing
 
-if typing.TYPE_CHECKING:
-    import ghidra
-    from ghidra.ghidra_builtins import currentProgram, popup, createFunction, monitor
+# if typing.TYPE_CHECKING:
+# import ghidra
+# from ghidra.ghidra_builtins import currentProgram, popup, createFunction, monitor
 
 # TODO Add User Code Here
 
@@ -66,7 +67,7 @@ overrideType = RefType.CALLOTHER_OVERRIDE_CALL
 callingConvention = "__regcall"
 interrupt_list = (
     0x21,
-    #0x60,
+    # 0x60,
 )
 
 
@@ -94,7 +95,7 @@ def loadSysCalls():
     # This loads the full set of system calls and grabs only the int 21h ones, and it also reorganizes them to be searchable by the value of register ah
     # tree = ET.parse("realmodeintservices.xml")
     rawDb = json.load(open(syscallFileName))
-    #updateSysCalls(rawDb)
+    # updateSysCalls(rawDb)
     sysCalls = {}
     for service in rawDb:
         intcalls = sysCalls.setdefault(service["int_num"], {})
@@ -111,27 +112,26 @@ def loadSysCalls():
 
 def run():
     if not (
-        currentProgram().getExecutableFormat() == MzLoader.MZ_NAME
-        and currentProgram().getLanguage().getProcessor().toString() == "x86"
+        currentProgram.getExecutableFormat() == MzLoader.MZ_NAME
+        and currentProgram.getLanguage().getProcessor().toString() == "x86"
     ):
         print("This script is intended for x86 MS-DOS files.")
         # exit(1)
 
-    syscallSpace = (
-        currentProgram().getAddressFactory().getAddressSpace(SYSCALL_SPACE_NAME)
+    syscallSpace = currentProgram.getAddressFactory().getAddressSpace(
+        SYSCALL_SPACE_NAME
     )
     if syscallSpace is None:
         print("AddressSpace %s not found, creating..." % SYSCALL_SPACE_NAME)
-        if not currentProgram().hasExclusiveAccess():
+        if not currentProgram.hasExclusiveAccess():
             popup(
                 "Must have exclusive access to "
-                + currentProgram().getName()
+                + currentProgram.getName()
                 + " to run this script."
             )
             exit(1)
         startAddr = (
-            currentProgram()
-            .getAddressFactory()
+            currentProgram.getAddressFactory()
             .getAddressSpace(SpaceNames.OTHER_SPACE_NAME)
             .getAddress(0x0)
         )
@@ -147,16 +147,16 @@ def run():
             False,
             True,
         )
-        if not cmd.applyTo(currentProgram()):
+        if not cmd.applyTo(currentProgram):
             popup("Failed to create " + SYSCALL_SPACE_NAME)
             exit(1)
-        syscallSpace = (
-            currentProgram().getAddressFactory().getAddressSpace(SYSCALL_SPACE_NAME)
+        syscallSpace = currentProgram.getAddressFactory().getAddressSpace(
+            SYSCALL_SPACE_NAME
         )
     else:
         print("AddressSpace %s found, continuing..." % syscallSpace)
-    funcsToCalls = getSyscallsInFunctions(currentProgram(), monitor())
-    addressesToSyscalls = resolveConstants(funcsToCalls, currentProgram(), monitor())
+    funcsToCalls = getSyscallsInFunctions(currentProgram, monitor)
+    addressesToSyscalls = resolveConstants(funcsToCalls, currentProgram, monitor)
     if len(addressesToSyscalls) == 0:
         print("No syscalls found")
         return
@@ -165,7 +165,7 @@ def run():
     for callSite, offset in sorted(addressesToSyscalls.items()):
         print("Checking %s and %02X" % (callSite, offset))
         callTarget = syscallSpace.getAddress(offset)
-        callee = currentProgram().getFunctionManager().getFunctionAt(callTarget)
+        callee = currentProgram.getFunctionManager().getFunctionAt(callTarget)
         if offset not in syscallNumbersToNames:
             print("Could not identify ", offset)
             continue
@@ -177,21 +177,17 @@ def run():
             # callee.updateFunction()
         callee.setCustomVariableStorage(True)
         convertArgumentsToParameters(
-            currentProgram(), callee, funcInfo.get("arguments", None)
+            currentProgram, callee, funcInfo.get("arguments", None)
         )
         # convertReturnValuesToReturns(currentProgram, callee, funcInfo.get("return", None), funcInfo.get("arguments", None))
-        ref = (
-            currentProgram()
-            .getReferenceManager()
-            .addMemoryReference(
-                callSite,
-                callTarget,
-                overrideType,
-                SourceType.USER_DEFINED,
-                Reference.MNEMONIC,
-            )
+        ref = currentProgram.getReferenceManager().addMemoryReference(
+            callSite,
+            callTarget,
+            overrideType,
+            SourceType.USER_DEFINED,
+            Reference.MNEMONIC,
         )
-        currentProgram().getReferenceManager().setPrimary(ref, True)
+        currentProgram.getReferenceManager().setPrimary(ref, True)
 
 
 dtypes = {
@@ -312,7 +308,7 @@ def checkInstruction(inst):
     retVal = False
     for op in inst.getPcode():
         if op.getOpcode() == PcodeOp.CALLOTHER:
-            index = op.getInput(0).getOffset()
+            index = int(op.getInput(0).getOffset())
             retVal = retVal or (
                 inst.getProgram().getLanguage().getUserDefinedOpName(index)
                 == MSDOS_CALLOTHER
