@@ -1,0 +1,2590 @@
+{
+  "cpu_int_02": {
+    "vector": 2,
+    "registers": {},
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "cpu_debug_break": {
+    "vector": 3,
+    "registers": {},
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "bios_video_set_mode": {
+    "vector": 16,
+    "registers": {
+      "ah": 0
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "bios_video_set_text_mode_cursor_shape": {
+    "vector": 16,
+    "registers": {
+      "ah": 1
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ch"
+        },
+        {
+          "name": "param_1",
+          "storage": "cl"
+        }
+      ]
+    }
+  },
+  "bios_video_set_cursor_position": {
+    "vector": 16,
+    "registers": {
+      "ah": 2
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_1",
+          "storage": "dh"
+        },
+        {
+          "name": "param_2",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "bios_video_get_cursor_position_size": {
+    "vector": 16,
+    "registers": {
+      "ah": 3
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "cl"
+        },
+        {
+          "name": "param_2",
+          "storage": "dh"
+        },
+        {
+          "name": "param_3",
+          "storage": "dl"
+        },
+        {
+          "name": "param_0",
+          "storage": "ch"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_1",
+          "storage": "cl"
+        },
+        {
+          "name": "param_2",
+          "storage": "dh"
+        },
+        {
+          "name": "param_3",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "bios_video_set_CGA_palette": {
+    "vector": 16,
+    "registers": {
+      "ah": 11
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_1",
+          "storage": "bl"
+        }
+      ]
+    }
+  },
+  "bios_video_get_current_video_mode": {
+    "vector": 16,
+    "registers": {
+      "ah": 15
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        },
+        {
+          "name": "param_1",
+          "storage": "bh"
+        },
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        },
+        {
+          "name": "param_1",
+          "storage": "bh"
+        }
+      ]
+    }
+  },
+  "bios_video_set_all_palette_registers": {
+    "vector": 16,
+    "registers": {
+      "ah": 16,
+      "al": 2
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "es"
+        },
+        {
+          "name": "param_3",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "bios_video_teletype_output": {
+    "vector": 16,
+    "registers": {
+      "ah": 14
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "bh"
+        },
+        {
+          "name": "param_2",
+          "storage": "bl"
+        }
+      ]
+    }
+  },
+  "bios_video_load_ROM_8x8_dbl_dot_patterns": {
+    "vector": 16,
+    "registers": {
+      "ah": 17,
+      "al": 18
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        }
+      ]
+    }
+  },
+  "bios_video_set_block_of_DAC_registers": {
+    "vector": 16,
+    "registers": {
+      "ah": 16,
+      "al": 18
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "es"
+        },
+        {
+          "name": "param_3",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "bios_video_unknown_1030": {
+    "vector": 16,
+    "registers": {
+      "ah": 48
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "bios_video_get_EGA_info": {
+    "vector": 16,
+    "registers": {
+      "ah": 18
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        },
+        {
+          "name": "param_1",
+          "storage": "ch"
+        },
+        {
+          "name": "param_2",
+          "storage": "cl"
+        },
+        {
+          "name": "param_0",
+          "storage": "bh"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        },
+        {
+          "name": "param_1",
+          "storage": "ch"
+        },
+        {
+          "name": "param_2",
+          "storage": "cl"
+        }
+      ]
+    }
+  },
+  "bios_video_write_string": {
+    "vector": 16,
+    "registers": {
+      "ah": 19
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "bh"
+        },
+        {
+          "name": "param_2",
+          "storage": "bl"
+        },
+        {
+          "name": "param_3",
+          "storage": "cx"
+        },
+        {
+          "name": "param_4",
+          "storage": "dh"
+        },
+        {
+          "name": "param_5",
+          "storage": "dl"
+        },
+        {
+          "name": "param_6",
+          "storage": [
+            "es",
+            "bp"
+          ]
+        }
+      ]
+    }
+  },
+  "bios_video_get_DAC_color_page_state": {
+    "vector": 16,
+    "registers": {
+      "ah": 26
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_0",
+          "storage": "bl"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        }
+      ]
+    }
+  },
+  "bios_get_memory_size": {
+    "vector": 18,
+    "registers": {},
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ax"
+        }
+      ],
+      "args": []
+    }
+  },
+  "disk_read_sectors_into_memory": {
+    "vector": 19,
+    "registers": {
+      "ah": 2
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_5",
+          "storage": "ah"
+        },
+        {
+          "name": "param_6",
+          "storage": "al"
+        },
+        {
+          "name": "param_0",
+          "storage": "ax"
+        },
+        {
+          "name": "param_1",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "sectors",
+          "type": "UnsignedInt",
+          "size": "1",
+          "storage": "al"
+        },
+        {
+          "name": "sector_cyl",
+          "type": "UnsignedInt",
+          "size": "2",
+          "storage": "cx"
+        },
+        {
+          "name": "head_number",
+          "type": "UnsignedInt",
+          "size": "1",
+          "storage": "dh"
+        },
+        {
+          "name": "head_number",
+          "type": "UnsignedInt",
+          "size": "1",
+          "storage": "dl"
+        },
+        {
+          "name": "data_buffer",
+          "type": "undefined*",
+          "size": "1",
+          "storage": [
+            "es",
+            "bx"
+          ]
+        },
+        {
+          "name": "param_5",
+          "storage": "ah"
+        },
+        {
+          "name": "param_6",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "bios_get_system_configuration": {
+    "vector": 21,
+    "registers": {
+      "ah": 192
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "es"
+        },
+        {
+          "name": "param_2",
+          "storage": "bx"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "es"
+        },
+        {
+          "name": "param_2",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "tandy_read_eeprom": {
+    "vector": 21,
+    "registers": {
+      "ah": 112,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "C"
+        },
+        {
+          "name": "param_0",
+          "storage": "dx"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        },
+        {
+          "name": "param_1",
+          "storage": "C"
+        }
+      ]
+    }
+  },
+  "tandy_write_eeprom": {
+    "vector": 21,
+    "registers": {
+      "ah": 112,
+      "al": 1
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "bios_kbd_get_keystroke": {
+    "vector": 22,
+    "registers": {
+      "ah": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "bios_kbd_check_keystroke": {
+    "vector": 22,
+    "registers": {
+      "ah": 1
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "ah"
+        },
+        {
+          "name": "param_0",
+          "storage": "Z"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "ah"
+        }
+      ]
+    }
+  },
+  "bios_get_system_time": {
+    "vector": 26,
+    "registers": {
+      "ah": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "dx"
+        },
+        {
+          "name": "param_0",
+          "storage": "cx"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msdos_terminate_program20": {
+    "vector": 32,
+    "registers": {},
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msdos_terminate_program": {
+    "vector": 33,
+    "registers": {
+      "ah": 0
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msdos_write_console_char": {
+    "vector": 33,
+    "registers": {
+      "ah": 2
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_direct_console_input": {
+    "vector": 33,
+    "registers": {
+      "ah": 6,
+      "dl": 255
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "al"
+        },
+        {
+          "name": "param_0",
+          "storage": "Z"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_direct_console_output": {
+    "vector": 33,
+    "registers": {
+      "ah": 6
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_direct_character_input_without_echo": {
+    "vector": 33,
+    "registers": {
+      "ah": 7
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "al"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_character_input_without_echo": {
+    "vector": 33,
+    "registers": {
+      "ah": 8
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "type": "Character",
+          "size": "1",
+          "storage": "al"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_display_string": {
+    "vector": 33,
+    "registers": {
+      "ah": 9
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_get_stdin_status": {
+    "vector": 33,
+    "registers": {
+      "ah": 11
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msdos_flush_buffer_and_read_stdin": {
+    "vector": 33,
+    "registers": {
+      "ah": 12
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_set_default_drive": {
+    "vector": 33,
+    "registers": {
+      "ah": 14
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_get_current_default_drive": {
+    "vector": 33,
+    "registers": {
+      "ah": 25
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_set_DTA": {
+    "vector": 33,
+    "registers": {
+      "ah": 26
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_set_interrupt_vector": {
+    "vector": 33,
+    "registers": {
+      "ah": 37
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_parse_filename_into_fcb": {
+    "vector": 33,
+    "registers": {
+      "ah": 41
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_3",
+          "storage": [
+            "ds",
+            "si"
+          ]
+        },
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": [
+            "ds",
+            "si"
+          ]
+        },
+        {
+          "name": "param_2",
+          "storage": [
+            "es",
+            "di"
+          ]
+        },
+        {
+          "name": "param_3",
+          "storage": [
+            "ds",
+            "si"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_get_system_date": {
+    "vector": 33,
+    "registers": {
+      "ah": 42
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "dh"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_0",
+          "storage": "dl"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dh"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        }
+      ]
+    }
+  },
+  "msdos_set_system_date": {
+    "vector": 33,
+    "registers": {
+      "ah": 43
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dh"
+        },
+        {
+          "name": "param_2",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_get_system_time": {
+    "vector": 33,
+    "registers": {
+      "ah": 45
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cl"
+        },
+        {
+          "name": "param_1",
+          "storage": "ch"
+        },
+        {
+          "name": "param_2",
+          "storage": "dh"
+        },
+        {
+          "name": "param_3",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_get_disk_transfer_area_address": {
+    "vector": 33,
+    "registers": {
+      "ah": 47
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "es",
+            "bx"
+          ]
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_get_dos_version": {
+    "vector": 33,
+    "registers": {
+      "ah": 48
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        },
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ]
+    }
+  },
+  "terminate_and_stay_resident": {
+    "vector": 33,
+    "registers": {
+      "ah": 49
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msdos_get_interrupt_vector": {
+    "vector": 33,
+    "registers": {
+      "ah": 53
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": [
+            "es",
+            "bx"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_get_switch_character": {
+    "vector": 33,
+    "registers": {
+      "ah": 55,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "dl"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_set_switch_character": {
+    "vector": 33,
+    "registers": {
+      "ah": 55,
+      "al": 1
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dl"
+        }
+      ]
+    }
+  },
+  "msdos_mkdir": {
+    "vector": 33,
+    "registers": {
+      "ah": 57
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_rmdir": {
+    "vector": 33,
+    "registers": {
+      "ah": 58
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_chdir": {
+    "vector": 33,
+    "registers": {
+      "ah": 59
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_create_truncate_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 60
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_2",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_open_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 61
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_2",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "al"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_close_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 62
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "msdos_read_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 63
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_3",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_3",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_write_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 64
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_3",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_3",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_delete_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 65
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_set_file_position": {
+    "vector": 33,
+    "registers": {
+      "ah": 66
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_3",
+          "type": "SignedInt*",
+          "size": "4",
+          "storage": [
+            "dx",
+            "ax"
+          ]
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "type": "SignedInt*",
+          "size": "4",
+          "storage": [
+            "cx",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_2",
+          "storage": "al"
+        },
+        {
+          "name": "param_3",
+          "type": "SignedInt*",
+          "size": "4",
+          "storage": [
+            "dx",
+            "ax"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_get_file_attributes": {
+    "vector": 33,
+    "registers": {
+      "ah": 67,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_set_file_attributes": {
+    "vector": 33,
+    "registers": {
+      "ah": 67,
+      "al": 1
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_1",
+          "storage": "cx"
+        },
+        {
+          "name": "param_2",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_ioctl_get_device_info": {
+    "vector": 33,
+    "registers": {
+      "ah": 68,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "dx"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msdos_ioctl_get_output_status": {
+    "vector": 33,
+    "registers": {
+      "ah": 68,
+      "al": 7
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "al"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_ioctl_generic_character_device_request": {
+    "vector": 33,
+    "registers": {
+      "ah": 68,
+      "al": 12
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "ch"
+        },
+        {
+          "name": "param_2",
+          "storage": "cl"
+        },
+        {
+          "name": "param_3",
+          "storage": "ds"
+        },
+        {
+          "name": "param_4",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msdos_unknown_2144": {
+    "vector": 33,
+    "registers": {
+      "ah": 68
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msdos_duplicate_file_handle": {
+    "vector": 33,
+    "registers": {
+      "ah": 69
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_get_current_directory": {
+    "vector": 33,
+    "registers": {
+      "ah": 71
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dl"
+        },
+        {
+          "name": "param_1",
+          "storage": "ds"
+        },
+        {
+          "name": "param_2",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msdos_allocate_memory_block": {
+    "vector": 33,
+    "registers": {
+      "ah": 72
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "msdos_free_memory_block": {
+    "vector": 33,
+    "registers": {
+      "ah": 73
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "es"
+        }
+      ]
+    }
+  },
+  "msdos_resize_memory_block": {
+    "vector": 33,
+    "registers": {
+      "ah": 74
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_2",
+          "storage": "bx"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "es"
+        },
+        {
+          "name": "param_1",
+          "storage": "bx"
+        },
+        {
+          "name": "param_2",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "msdos_exec": {
+    "vector": 33,
+    "registers": {
+      "ah": 75
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "param_2",
+          "storage": [
+            "es",
+            "bx"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_terminate": {
+    "vector": 33,
+    "registers": {
+      "ah": 76
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_get_return_code": {
+    "vector": 33,
+    "registers": {
+      "ah": 77
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        },
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ]
+    }
+  },
+  "msdos_find_first_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 78
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        }
+      ]
+    }
+  },
+  "msdos_find_next_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 79
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_get_current_process_id": {
+    "vector": 33,
+    "registers": {
+      "ah": 81
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_get_list_of_lists": {
+    "vector": 33,
+    "registers": {
+      "ah": 82
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_0",
+          "storage": "es"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "msdos_get_verify_flag": {
+    "vector": 33,
+    "registers": {
+      "ah": 84
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ],
+      "args": []
+    }
+  },
+  "msdos_rename_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 86
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "errorCode",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "oldName",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "ds",
+            "dx"
+          ]
+        },
+        {
+          "name": "newName",
+          "type": "Character*",
+          "size": "1",
+          "storage": [
+            "es",
+            "di"
+          ]
+        },
+        {
+          "name": "errorCode",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_get_memory_allocation_strategy": {
+    "vector": 33,
+    "registers": {
+      "ah": 88,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_set_memory_allocation_strategy": {
+    "vector": 33,
+    "registers": {
+      "ah": 88,
+      "al": 1
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bl"
+        }
+      ]
+    }
+  },
+  "msdos_get_UMB_link_state": {
+    "vector": 33,
+    "registers": {
+      "ah": 88,
+      "al": 2
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msdos_set_UMB_link_state": {
+    "vector": 33,
+    "registers": {
+      "ah": 88,
+      "al": 3
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_get_extended_error_information": {
+    "vector": 33,
+    "registers": {
+      "ah": 89
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_1",
+          "storage": "bl"
+        },
+        {
+          "name": "param_2",
+          "storage": "ch"
+        },
+        {
+          "name": "param_3",
+          "storage": "es"
+        },
+        {
+          "name": "param_4",
+          "storage": "di"
+        },
+        {
+          "name": "param_0",
+          "storage": "ax"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bh"
+        },
+        {
+          "name": "param_1",
+          "storage": "bl"
+        },
+        {
+          "name": "param_2",
+          "storage": "ch"
+        },
+        {
+          "name": "param_3",
+          "storage": "es"
+        },
+        {
+          "name": "param_4",
+          "storage": "di"
+        }
+      ]
+    }
+  },
+  "msdos_create_new_file": {
+    "vector": 33,
+    "registers": {
+      "ah": 91
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_3",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "ds"
+        },
+        {
+          "name": "param_2",
+          "storage": "dx"
+        },
+        {
+          "name": "param_3",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_set_handle_count": {
+    "vector": 33,
+    "registers": {
+      "ah": 103
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "ax"
+        },
+        {
+          "name": "param_0",
+          "storage": "C"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "ax"
+        }
+      ]
+    }
+  },
+  "msdos_multiplex": {
+    "vector": 47,
+    "registers": {},
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        },
+        {
+          "name": "param_1",
+          "storage": "al"
+        }
+      ]
+    }
+  },
+  "msmouse_reset": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 0
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_0",
+          "storage": "ax"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "msmouse_show_cursor": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 1
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msmouse_hide_cursor": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 2
+    },
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "msmouse_position_mouse_cursor": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 4
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msmouse_define_horizontal_range": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 7
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msmouse_define_vertical_range": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 8
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msmouse_set_ISR": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 12
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "es"
+        },
+        {
+          "name": "param_2",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msmouse_define_mickey_pixel_ratio": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 15
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "cx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "msmouse_set_interrupt_rate": {
+    "vector": 51,
+    "registers": {
+      "ah": 0,
+      "al": 28
+    },
+    "signature": {
+      "return": [],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "INT3F_OVERLAY_MANAGER": {
+    "vector": 63,
+    "registers": {},
+    "signature": {
+      "return": [],
+      "args": []
+    }
+  },
+  "ems_get_manager_status": {
+    "vector": 103,
+    "registers": {
+      "ah": 64
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": []
+    }
+  },
+  "ems_get_page_frame_segment": {
+    "vector": 103,
+    "registers": {
+      "ah": 65
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        }
+      ]
+    }
+  },
+  "ems_get_number_of_pages": {
+    "vector": 103,
+    "registers": {
+      "ah": 66
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        },
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "ems_get_handle_and_allocate_memory": {
+    "vector": 103,
+    "registers": {
+      "ah": 67
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_1",
+          "storage": "dx"
+        },
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "bx"
+        },
+        {
+          "name": "param_1",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "ems_map_memory": {
+    "vector": 103,
+    "registers": {
+      "ah": 68
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "al"
+        },
+        {
+          "name": "param_1",
+          "storage": "bx"
+        },
+        {
+          "name": "param_2",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "ems_release_memory": {
+    "vector": 103,
+    "registers": {
+      "ah": 69
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ah"
+        }
+      ],
+      "args": [
+        {
+          "name": "param_0",
+          "storage": "dx"
+        }
+      ]
+    }
+  },
+  "ems_get_emm_version": {
+    "vector": 103,
+    "registers": {
+      "ah": 70
+    },
+    "signature": {
+      "return": [
+        {
+          "name": "param_0",
+          "storage": "ax"
+        }
+      ],
+      "args": []
+    }
+  }
+}
